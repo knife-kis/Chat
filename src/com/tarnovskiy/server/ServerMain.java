@@ -6,14 +6,21 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ServerMain {
     private Vector<ClientHandler> clients;
+
+
+
 
     public ServerMain() {
         clients = new Vector<>();
         ServerSocket server = null;
         Socket socket = null;
+
+
 
         try {
 
@@ -30,6 +37,7 @@ public class ServerMain {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+
             closeSocketAndServer(socket, server);
             AuthService.disconnect();
         }
@@ -81,14 +89,14 @@ public class ServerMain {
     }
 
     public void privatebroadcastMsg(ClientHandler from, String msg, String nickTo){///////////////////////////////////
-        for (ClientHandler t : clients){
-            if (!t.checkBlackList(from.getNick())){
-                t.sendMsg("from " + from.getNick() + ": " + msg);
-                t.sendMsg("to " + nickTo + ": " + msg);
-            } else {
-                from.sendMsg(nickTo + " добавил вас в черный список");
+        for (ClientHandler o : clients) {
+            if (o.getNick().equals(nickTo)) {
+                o.sendMsg("from " + from.getNick() + ": " + msg);
+                from.sendMsg("to " + nickTo + ": " + msg);
+                return;
             }
         }
+        from.sendMsg("Клиент с ником " + nickTo + " не найден в чате");
     }
 
     public boolean searchName(String nick) {
