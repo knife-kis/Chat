@@ -6,14 +6,21 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ServerMain {
     private Vector<ClientHandler> clients;
+
+
+
 
     public ServerMain() {
         clients = new Vector<>();
         ServerSocket server = null;
         Socket socket = null;
+
+
 
         try {
 
@@ -30,6 +37,7 @@ public class ServerMain {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+
             closeSocketAndServer(socket, server);
             AuthService.disconnect();
         }
