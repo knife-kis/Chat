@@ -81,14 +81,14 @@ public class ServerMain {
     }
 
     public void privatebroadcastMsg(ClientHandler from, String msg, String nickTo){///////////////////////////////////
-        for (ClientHandler t : clients){
-            if (!t.checkBlackList(from.getNick())){
-                t.sendMsg("from " + from.getNick() + ": " + msg);
-                t.sendMsg("to " + nickTo + ": " + msg);
-            } else {
-                from.sendMsg(nickTo + " добавил вас в черный список");
+        for (ClientHandler o : clients) {
+            if (o.getNick().equals(nickTo)) {
+                o.sendMsg("from " + from.getNick() + ": " + msg);
+                from.sendMsg("to " + nickTo + ": " + msg);
+                return;
             }
         }
+        from.sendMsg("Клиент с ником " + nickTo + " не найден в чате");
     }
 
     public boolean searchName(String nick) {
