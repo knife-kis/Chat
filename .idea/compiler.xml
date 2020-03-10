@@ -18,7 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Chat230220" options="" />
+      <module name="Chat230220" options="--add-modules=javafx.graphics,javafx.fxml,javafx.base,javafx.controls" />
     </option>
   </component>
 </project>
