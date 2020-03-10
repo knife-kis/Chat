@@ -1,7 +1,8 @@
 package com.tarnovskiy.server;
 
-import com.tarnovskiy.server.DB.AuthService;
+import org.apache.log4j.Logger;
 
+import com.tarnovskiy.server.DB.AuthService;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,6 +10,7 @@ import java.util.Vector;
 
 public class ServerMain {
     private Vector<ClientHandler> clients;
+    private static final Logger log = Logger.getLogger(ServerMain.class);
 
     public ServerMain() {
         clients = new Vector<>();
@@ -20,6 +22,8 @@ public class ServerMain {
             AuthService.connect();
             server = new ServerSocket(8189);
             System.out.println("Сервер запущен!");
+            log.info("Сервер запущен!");
+
 
             while (true) {
                 socket = server.accept();

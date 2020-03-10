@@ -47,10 +47,13 @@ public class Controller {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            new Thread(() -> {
-                authorizationClient();
-                readText();
-                showPanelWhenLoggedIn(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Controller.this.authorizationClient();
+                    Controller.this.readText();
+                    Controller.this.showPanelWhenLoggedIn(false);
+                }
             }).start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,11 +84,14 @@ public class Controller {
                     break;
                 }
                 if (str.startsWith("/clientlist ")) {
-                    String[] tokens = str.split(" ");
-                    Platform.runLater(() -> {
-                        clientList.getItems().clear();
-                        for (int i = 1; i < tokens.length; i++) {
-                            clientList.getItems().add(tokens[i]);
+                    final String[] tokens = str.split(" ");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            clientList.getItems().clear();
+                            for (int i = 1; i < tokens.length; i++) {
+                                clientList.getItems().add(tokens[i]);
+                            }
                         }
                     });
                 } else {
