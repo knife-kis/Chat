@@ -27,8 +27,8 @@ public class ServerMain {
 
             while (true) {
                 socket = server.accept();
-                System.out.println("Клиент подключился ");
                 new ClientHandler(this, socket);
+                log.info("Клиент подключился ");
             }
 
         } catch (IOException e) {
@@ -89,6 +89,7 @@ public class ServerMain {
             if (o.getNick().equals(nickTo)) {
                 o.sendMsg("from " + from.getNick() + ": " + msg);
                 from.sendMsg("to " + nickTo + ": " + msg);
+                log.info("Клиент " + from.getNick() + " послал личное сообщение - " + nickTo);
                 return;
             }
         }
