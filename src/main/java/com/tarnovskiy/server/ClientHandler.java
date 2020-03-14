@@ -26,12 +26,9 @@ public class ClientHandler {
             this.out = new DataOutputStream(socket.getOutputStream());
             this.blackList = new ArrayList<>();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    ClientHandler.this.authorization();
-                    ClientHandler.this.readClient();
-                }
+            new Thread(() -> {
+                this.authorization();
+                this.readClient();
             }).start();
         } catch (IOException e) {
             e.printStackTrace();
